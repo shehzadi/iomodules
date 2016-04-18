@@ -88,6 +88,7 @@ func notFound() routeResponse {
 
 func sendReply(w http.ResponseWriter, r *http.Request, rsp *routeResponse) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS")
 	if rsp.body != nil {
 		if len(rsp.contentType) != 0 {
 			w.Header().Set("Content-Type", rsp.contentType)
@@ -565,6 +566,7 @@ func NewServer() *HoverServer {
 	mod.Methods("GET").Path("/").HandlerFunc(makeHandler(s.handleModuleList))
 	mod.Methods("POST").Path("/").HandlerFunc(makeHandler(s.handleModulePost))
 	mod.Methods("GET").Path("/{moduleId}").HandlerFunc(makeHandler(s.handleModuleGet))
+	mod.Methods("OPTIONS").Path("/{moduleId}").HandlerFunc(makeHandler(s.handleModuleGet))
 	mod.Methods("PUT").Path("/{moduleId}").HandlerFunc(makeHandler(s.handleModulePut))
 	mod.Methods("DELETE").Path("/{moduleId}").HandlerFunc(makeHandler(s.handleModuleDelete))
 
@@ -583,6 +585,7 @@ func NewServer() *HoverServer {
 	lnk.Methods("GET").Path("/").HandlerFunc(makeHandler(s.handleLinkList))
 	lnk.Methods("POST").Path("/").HandlerFunc(makeHandler(s.handleLinkPost))
 	lnk.Methods("GET").Path("/{connId}").HandlerFunc(makeHandler(s.handleLinkGet))
+	lnk.Methods("OPTIONS").Path("/{connId}").HandlerFunc(makeHandler(s.handleLinkGet))
 	lnk.Methods("PUT").Path("/{connId}").HandlerFunc(makeHandler(s.handleLinkPut))
 	lnk.Methods("DELETE").Path("/{connId}").HandlerFunc(makeHandler(s.handleLinkDelete))
 
