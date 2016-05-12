@@ -286,7 +286,7 @@ func (s *HoverServer) handleModuleDelete(r *http.Request) routeResponse {
 	node.adapter.Close()
 	delete(s.adapterEntries, id)
 	s.g.RemoveNode(node)
-	return routeResponse{}
+	return routeResponse{statusCode: 204}
 }
 
 func (s *HoverServer) handleModuleTableList(r *http.Request) routeResponse {
@@ -564,6 +564,7 @@ func NewServer() *HoverServer {
 
 	mod := rtr.PathPrefix("/modules").Subrouter()
 	mod.Methods("GET").Path("/").HandlerFunc(makeHandler(s.handleModuleList))
+	mod.Methods("OPTIONS").Path("/").HandlerFunc(makeHandler(s.handleModuleList))
 	mod.Methods("POST").Path("/").HandlerFunc(makeHandler(s.handleModulePost))
 	mod.Methods("GET").Path("/{moduleId}").HandlerFunc(makeHandler(s.handleModuleGet))
 	mod.Methods("OPTIONS").Path("/{moduleId}").HandlerFunc(makeHandler(s.handleModuleGet))

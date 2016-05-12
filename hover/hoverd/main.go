@@ -19,13 +19,13 @@ var helpFlag bool
 
 func init() {
 	const (
-		listenSocketDefault = "127.0.0.1:5000"
+		listenSocketDefault = "127.0.0.1:8080"
 		listenSocketHelp    = "address:port to serve up the api"
 	)
 	flag.StringVar(&listenSocket, "listen", listenSocketDefault, listenSocketHelp)
 	flag.BoolVar(&helpFlag, "h", false, "print this help")
 	flag.Usage = func() {
-		fmt.Printf("Usage: %s -listen 0.0.0.0:5000\n", filepath.Base(os.Args[0]))
+		fmt.Printf("Usage: %s -listen 0.0.0.0:8080\n", filepath.Base(os.Args[0]))
 		fmt.Printf(" -listen ADDR:PORT  %s (default=%s)\n", listenSocketHelp, listenSocketDefault)
 	}
 }
