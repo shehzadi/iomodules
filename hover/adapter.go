@@ -22,10 +22,7 @@ import (
 )
 
 func NewAdapter(req createModuleRequest, g Graph, id int) (adapter Adapter, err error) {
-	uuid, err := NewUUID4()
-	if err != nil {
-		return
-	}
+	uuid := NewUUID4()
 
 	parts := strings.SplitN(req.ModuleType, "/", 2)
 	switch parts[0] {
@@ -36,8 +33,6 @@ func NewAdapter(req createModuleRequest, g Graph, id int) (adapter Adapter, err 
 		}
 		a := &BpfAdapter{
 			uuid:    uuid[:8],
-			name:    req.DisplayName,
-			tags:    req.Tags,
 			perm:    PermR | PermW,
 			config:  make(map[string]interface{}),
 			subtype: subtype,
